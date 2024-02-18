@@ -4,7 +4,10 @@ if(process.env.NODE_ENV !== 'production'){
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user')
+const filesRoutes = require('./routes/file')
+const settingsRoutes = require('./routes/settings')
 
+const favicon = require('serve-favicon');
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const mongoose = require("mongoose")
@@ -15,12 +18,13 @@ const passport = require('passport');
 
 let app = express()
 
+app.use(express.static( 'public'));
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static('public'))
+app.use(express.json())
 app.use(flash())
 app.use(session({
     secret: 'secret',
@@ -30,7 +34,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DATABASE_URL)
     .then(() => {
         console.log("Connected to Mongo");
     })
@@ -39,7 +43,9 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
     });
 
 app.use(authRoutes);
-app.use(userRoutes)
+app.use('/user',userRoutes)
+app.use('/user/:username/files',filesRoutes)
+app.use('/user/:username/settings', settingsRoutes)
 app.get('/', (req, res) => {
     res.render('index')
 })

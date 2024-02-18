@@ -46,10 +46,11 @@ passport.deserializeUser(async (id, done) => {
 });
 
 router.post('/login', passport.authenticate('local', {
-    successRedirect: `/user`,
+    successRedirect: '/user',
     failureRedirect: '/login',
     failureFlash: true
 }));
+
 
 router.post('/register', async (req, res) => {
     try {

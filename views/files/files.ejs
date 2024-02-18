@@ -1,0 +1,48 @@
+<h1>Your files</h1>
+<%function formatLastUpdated(dateString) {
+    const updatedAt = new Date(dateString);
+    const today = new Date();
+
+    if (updatedAt.toDateString() === today.toDateString()) {
+        const hours = updatedAt.getHours().toString().padStart(2, '0');
+        const minutes = updatedAt.getMinutes().toString().padStart(2, '0');
+        return `Today ${hours}:${minutes}`;
+    } else if (updatedAt.getFullYear() === today.getFullYear()) {
+        return updatedAt.toLocaleDateString(navigator.language, {day: 'numeric', month: 'short'});
+    } else {
+        return updatedAt.toLocaleDateString(navigator.language, { day: 'numeric' , month: 'short', year: 'numeric'});
+    }
+}%>
+
+<!--<script src="/js/dateFormatting"></script> Nie mam pojęcia czemu to nie działa-->
+
+<form id="createForm" action="/user/<%= username %>/files" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <button type="submit">Create</button>
+</form>
+
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Last updated</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% userFiles.forEach(userFile => { %>
+        <tr>
+            <td>
+                <a href="/user/<%= username %>/files/<%= userFile._id %>">
+                    <%= userFile.title %>
+                </a>
+            </td>
+            <td>
+                <%= formatLastUpdated(userFile.updatedAt) %>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>

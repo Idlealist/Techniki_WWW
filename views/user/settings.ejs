@@ -1,0 +1,30 @@
+<% if (errorMessage) { %>
+    <span><%= errorMessage %></span>
+<% } %>
+
+
+<form id="changeNameForm" action="/user/<%= username %>/settings/change-name" method="POST">
+    <label for="newName">New Name:</label>
+    <input type="text" id="newName" value="<%= username %>" name="newName" required>
+    <button type="submit">Change Name</button>
+</form>
+<form id="changePasswordForm" action="/user/<%= username %>/settings/change-password" method="POST">
+    <label for="newPassword">New Password:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
+    <label for="repeatedPassword">Repeat Password:</label>
+    <input type="password" id="repeatedPassword" name="repeatedPassword" required>
+    <button type="submit">Change Password</button>
+</form>
+<button onclick="confirmDelete()">Delete Account</button>
+<form id="deleteForm" action="/user/<%= username %>/settings/delete" method="POST" style="visibility: hidden;">
+</form>
+
+<script>
+    function confirmDelete() {
+        const confirmation = confirm("Last warning!!! This action will permanently delete your account with all associated files, do you still wish to proceed?");
+        if (confirmation) {
+            const form = document.getElementById('deleteForm');
+            form.submit();
+        }
+    }
+</script>

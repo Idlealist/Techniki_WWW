@@ -1,0 +1,30 @@
+<h1>Welcome, <%= username %>!</h1>
+<a href="/user/<%= username %>/files">Go to Files</a>
+
+<br/>
+<a href="/user/<%= username %>/settings"> Settings </a>
+<br/>
+
+<form action="/user/logout" method="POST">
+    <button type="submit">Logout</button>
+</form>
+
+<script>
+    function toggleSettings() {
+        const settings = document.getElementById('settings');
+        if (settings.style.visibility === 'hidden') {
+            settings.style.visibility = 'visible';
+        } else {
+            settings.style.visibility = 'hidden';
+        }
+    }
+
+
+    function confirmDelete() {
+        const confirmation = confirm("Last warning!!! This action will permanently delete your account with all associated files, do you still wish to proceed?");
+        if (confirmation) {
+            const form = document.getElementById('deleteForm');
+            form.submit();
+        }
+    }
+</script>

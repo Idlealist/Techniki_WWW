@@ -1,15 +1,24 @@
 const express = require('express');
 const router = express.Router();
+const isAuthenticated = require('../Middlewares/authMiddleware');
 
-router.get('/user', isAuthenticated, (req, res) => {
-    res.render('userPage', { username: req.user.username });
+router.get('/', isAuthenticated, (req, res) => {
+    res.redirect(`user/${req.user.username}`);
 });
 
-function isAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/login');
-}
+router.get('/:username', isAuthenticated, (req, res) => {
+    res.render('user/userPage', { username: req.user.username });
+});
+
+router.post('/logout', (req, res) => {
+    req.logout(() => {
+        res.redirect('/login');
+    });
+});
+
+router.get('/:username', isAuthenticated, (req, res) => {
+    res.render('user/userPage', { username: req.user.username });
+});
+
 
 module.exports = router;
