@@ -3,7 +3,6 @@
         <div class="alert alert-danger mt-4" role="alert"><%= errorMessage %></div>
     <% } %>
 
-
     <form id="changeNameForm" class="mt-4" action="/user/<%= username %>/settings/change-name" method="POST">
         <label for="newName" class="form-label">New Name:</label>
         <input type="text" id="newName" class="form-control-sm mb-4" value="<%= username %>" name="newName" required>
@@ -23,7 +22,8 @@
     <button onclick="confirmDelete()" class="btn btn-danger">
         <i class="bi bi-x-square"></i> Delete Account
     </button>
-    <form id="deleteForm" action="/user/<%= username %>/settings?_method=DELETE" method="POST" style="visibility: hidden;">
+    <form id="deleteForm" action="/user/<%= username %>/settings?_method=DELETE" method="POST"
+          style="visibility: hidden;">
     </form>
 </div>
 

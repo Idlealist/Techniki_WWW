@@ -1,16 +1,17 @@
 <div class="container">
     <h1>Sing in</h1>
-    <% if (messages.error) {%>
+    <% if (messages.error) { %>
         <div class="alert alert-danger m-10" role="alert">
 
-                <%= messages.error%>
+            <%= messages.error %>
         </div>
-    <%}%>
+    <% } %>
     <form action="/login" method="POST">
         <label for="username" class="form-label">Login: </label>
-        <input type="text" name="username" id="username" class="form-control-md" placeholder="Username"  required><br>
+        <input type="text" name="username" id="username" class="form-control-md" placeholder="Username" required><br>
         <label for="password" class="form-label">Password: </label>
-        <input type="password" name="password" id="password" class="form-control-md" placeholder="Password" required><br>
+        <input type="password" name="password" id="password" class="form-control-md" placeholder="Password"
+               required><br>
         <button type="submit" class="btn btn-secondary">Login</button>
     </form>
 

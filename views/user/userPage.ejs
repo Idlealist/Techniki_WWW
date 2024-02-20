@@ -10,7 +10,8 @@
     <a href="/files" class="btn btn-primary btn-block mb-3">
         <i class="bi bi-files-alt"></i> Go to Files
     </a>
-    <a href="/user/<%= username %>/settings" class="btn btn-secondary btn-block mb-3"> <i class="bi bi-gear-fill"></i> Settings</a>
+    <a href="/user/<%= username %>/settings" class="btn btn-secondary btn-block mb-3"> <i class="bi bi-gear-fill"></i>
+        Settings</a>
 
     <form action="/user/logout" method="POST">
         <button type="submit" class="btn btn-danger btn-block">
@@ -28,7 +29,6 @@
             settings.style.visibility = 'hidden';
         }
     }
-
 
     function confirmDelete() {
         const confirmation = confirm("Last warning!!! This action will permanently delete your account with all associated files, do you still wish to proceed?");
