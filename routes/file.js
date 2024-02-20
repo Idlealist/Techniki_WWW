@@ -16,7 +16,7 @@ router.post('/', isAuthenticated, async (req, res) =>{
         html: '',
         owner: req.user.id
     })
-    res.redirect(`/user/${req.user.username}/files/${newFile._id}`);
+    res.redirect(`/files/${newFile._id}`);
 });
 
 router.get('/:id', isAuthenticated, async(req, res) =>{
@@ -35,10 +35,10 @@ router.put('/:id/title', isAuthenticated, async (req, res) =>{
     const markdownFile = await MarkdownFile.findById(req.params.id);
     markdownFile.title = title;
     await markdownFile.save();
-    res.redirect(`/user/${req.user.username}/files/${req.params.id}`);
+    res.redirect(`/files/${req.params.id}`);
 });
 router.delete('/:id', isAuthenticated, async (req, res) =>{
     await MarkdownFile.findByIdAndDelete(req.params.id);
-    res.redirect(`/user/${req.user.username}/files`);
+    res.redirect(`/files`);
 });
 module.exports = router;

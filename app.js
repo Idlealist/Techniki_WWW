@@ -52,7 +52,7 @@ mongoose.connect(process.env.DATABASE_URL)
 
 app.use(authRoutes);
 app.use('/user',userRoutes)
-app.use('/user/:username/files',filesRoutes)
+app.use('/files',filesRoutes)
 app.use('/user/:username/settings', settingsRoutes)
 
 
