@@ -21,7 +21,7 @@ router.post('/change-name', isAuthenticated, async (req, res) => {
     res.redirect(`/user/${newName}`);
 });
 
-router.post('/delete', isAuthenticated, async (req, res) => {
+router.delete('/', isAuthenticated, async (req, res) => {
     await MarkdownFile.deleteMany({ owner: req.user._id });
     await User.findOneAndDelete({ _id: req.user._id });
     req.logout(() => {

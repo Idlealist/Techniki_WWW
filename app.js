@@ -15,10 +15,11 @@ const path = require('path')
 const flash = require('express-flash')
 const session = require('express-session')
 const passport = require('passport');
-
+const methodOverride = require('method-override');
 let app = express()
 
-app.use(express.static( 'public'));
+
+app.use(express.static( path.join(__dirname,'/public')));
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.set('layout', 'layouts/layout')
@@ -33,6 +34,12 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(methodOverride('_method'))
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    res.locals.username = req.user ? req.user.username : null;
+    next();
+});
 
 mongoose.connect(process.env.DATABASE_URL)
     .then(() => {
@@ -42,12 +49,18 @@ mongoose.connect(process.env.DATABASE_URL)
         console.error("Error connecting to Mongo:", error);
     });
 
+
 app.use(authRoutes);
 app.use('/user',userRoutes)
 app.use('/user/:username/files',filesRoutes)
 app.use('/user/:username/settings', settingsRoutes)
+
+
 app.get('/', (req, res) => {
-    res.render('index')
+    if(req.isAuthenticated())
+        res.redirect('/user')
+    else
+        res.render('index')
 })
 
 const PORT = process.env.PORT || 3000

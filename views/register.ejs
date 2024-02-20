@@ -1,9 +1,15 @@
-<h1>Register</h1>
-<% if (message) {%>
-    <%= message%>
-<%}%>
-<form action="/register" method="POST">
-    <input type="text" name="username" placeholder="Username" value="<%= username ? username : ''%>"  required><br>
-    <input type="password" name="password" placeholder="Password" value="<%= password ? password : ''%>" required><br>
-    <button type="submit">Register</button>
-</form>
+<div class="container">
+    <h1>Create new account</h1>
+    <% if (message) {%>
+    <div class="alert alert-danger m-10" role="alert">
+        <%= message%>
+    </div>
+    <%}%>
+    <form action="/register" method="POST">
+        <label for="username" class="form-label">Login: </label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<%= username ? username : ''%>"  required><br>
+        <label for="username" class="form-label">Login: </label>
+        <input type="password" name="password" id="username" class="form-control" placeholder="Password" value="<%= password ? password : ''%>" required><br>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

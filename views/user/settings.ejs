@@ -1,23 +1,31 @@
-<% if (errorMessage) { %>
-    <span><%= errorMessage %></span>
-<% } %>
+<div class="container">
+    <% if (errorMessage) { %>
+        <div class="alert alert-danger mt-4" role="alert"><%= errorMessage %></div>
+    <% } %>
 
 
-<form id="changeNameForm" action="/user/<%= username %>/settings/change-name" method="POST">
-    <label for="newName">New Name:</label>
-    <input type="text" id="newName" value="<%= username %>" name="newName" required>
-    <button type="submit">Change Name</button>
-</form>
-<form id="changePasswordForm" action="/user/<%= username %>/settings/change-password" method="POST">
-    <label for="newPassword">New Password:</label>
-    <input type="password" id="newPassword" name="newPassword" required>
-    <label for="repeatedPassword">Repeat Password:</label>
-    <input type="password" id="repeatedPassword" name="repeatedPassword" required>
-    <button type="submit">Change Password</button>
-</form>
-<button onclick="confirmDelete()">Delete Account</button>
-<form id="deleteForm" action="/user/<%= username %>/settings/delete" method="POST" style="visibility: hidden;">
-</form>
+    <form id="changeNameForm" class="mt-4" action="/user/<%= username %>/settings/change-name" method="POST">
+        <label for="newName" class="form-label">New Name:</label>
+        <input type="text" id="newName" class="form-control-sm mb-4" value="<%= username %>" name="newName" required>
+        <button type="submit" class="btn btn-secondary">
+            <i class="bi bi-pencil-square"></i> Change Name
+        </button>
+    </form>
+    <form id="changePasswordForm" action="/user/<%= username %>/settings/change-password" method="POST">
+        <label for="newPassword" class="form-label">New Password:</label>
+        <input type="password" id="newPassword" class="form-control-sm mb-4" name="newPassword" required>
+        <label for="repeatedPassword" class="form-label">Repeat Password:</label>
+        <input type="password" id="repeatedPassword" class="form-control-sm mb-4" name="repeatedPassword" required>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-pencil-square"></i> Change Password
+        </button>
+    </form>
+    <button onclick="confirmDelete()" class="btn btn-danger">
+        <i class="bi bi-x-square"></i> Delete Account
+    </button>
+    <form id="deleteForm" action="/user/<%= username %>/settings?_method=DELETE" method="POST" style="visibility: hidden;">
+    </form>
+</div>
 
 <script>
     function confirmDelete() {

@@ -1,0 +1,93 @@
+<div class="container-fluid">
+
+    <div class="row mt-2" >
+        <div class="col"><h2> <%= MarkdownFile.title %> </h2> </div>
+        <div class="col link-secondary mt-2"> Created: <%= new Date(MarkdownFile.createdAt).toLocaleString() %></div>
+        <div class="col">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#editTitleCollapse">
+                    <i class="bi bi-gear-fill"></i> Options
+                </button>
+            </div>
+            <div class="collapse mt-2" id="editTitleCollapse">
+                <form action="/user/<%= username %>/files/<%= MarkdownFile._id %>/title?_method=PUT" method="POST">
+                    <div class="input-group">
+                        <input type="text" id="titleInput" class="form-control form-control-sm" name="title" value="<%= MarkdownFile.title %>" placeholder="Title" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-pencil-square"></i> Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <form action="/user/<%= username %>/files/<%= MarkdownFile._id %>?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger mt-2">
+                        <i class="bi bi-file-earmark-excel-fill"></i>Delete this file
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-6 col-12">
+            <div class="editor-container">
+                <div class="editor">
+                    <textarea id="markdownContent" rows="10" cols="60"><%= MarkdownFile.content %></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <h2 class="border-bottom border-5">Preview:</h2>
+            <div id="htmlPreview" >
+                <%- MarkdownFile.html %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+<script>
+    const markdownContent = document.getElementById('markdownContent');
+    const simplemde = new SimpleMDE({ element: markdownContent, spellChecker: false, previewRender: false,
+        placeholder: "Type here...", hideIcons: ["fullscreen", "preview", "side-by-side"],});
+    const titleInput = document.getElementById('titleInput');
+    let timeoutId;
+
+
+    titleInput.addEventListener('input', function() {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(saveMarkdown, 100);
+    });
+
+    simplemde.codemirror.on("change", function(){
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(saveMarkdown, 100); //save changes 0.1sec after last change so db isn't spammed
+    });
+
+    function saveMarkdown() {
+        const markdownId = '<%= MarkdownFile._id %>';
+        const markdownContent = simplemde.value();
+
+        fetch(`/user/<%= username %>/files/${markdownId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ markdownContent: markdownContent}),
+        })
+            .then(res => res.json())
+            .then(data => {
+                const htmlPreview = document.getElementById('htmlPreview');
+                htmlPreview.innerHTML = data.html;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+</script>
