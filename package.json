@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.2",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
@@ -10,12 +9,10 @@
     "marked": "^12.0.0",
     "method-override": "^3.0.0",
     "mongoose": "^8.1.2",
-    "node-sass-middleware": "^1.1.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
-    "serve-favicon": "^2.5.0",
-    "simplemde": "^1.11.2"
+    "serve-favicon": "^2.5.0"
   },
   "name": "techniki_www",
   "version": "1.0.0",
