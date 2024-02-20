@@ -26,7 +26,7 @@ Strona jest prostą aplikacją internetową pozwalającą na tworzenie, modyfika
 
 
 ### **Baza danych**
-Uruchomić serwer Mongoose, a następnie w projekcie stworzyć plik `.env`
+Uruchomić bazę danych Mongoose, a następnie w projekcie stworzyć plik `.env`
 o treści :
 ```
 DATABASE_URL= *adres url bazy danych*
