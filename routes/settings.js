@@ -41,7 +41,7 @@ router.post('/change-password', isAuthenticated, async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
     await user.save();
-    res.redirect('/user/' + req.params.username);
+    res.redirect('/user/' + req.user.username);
 });
 
 module.exports = router;
