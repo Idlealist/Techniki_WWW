@@ -3,6 +3,7 @@ body{
 }
 .CodeMirror,
 .CodeMirror-scroll,#htmlPreview{
+    padding-right: 10px;
     min-height: 50vh;
     overflow-y: scroll;
     background-color: #fff;
