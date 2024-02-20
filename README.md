@@ -4,7 +4,7 @@
 <br>
 
 ## **Wstęp**
-Strona zrealizowana jako drugi projekt zaliczeniowy z przedmiotu Techniki WWW.
+Strona zrealizowana jako drugi projekt zaliczeniowy z przedmiotu Techniki_WWW.
 
 ----------
 ## **Opis**
