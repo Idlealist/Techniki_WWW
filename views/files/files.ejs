@@ -1,35 +1,46 @@
 <div class="container">
     <h1>Your files</h1>
-    <form id="createForm" class="mb-2" action="/user/<%= username %>/files" method="POST">
+    <form id="createForm" class="mb-2" action="/files" method="POST">
         <label for="title" class="form-label">Create new file:</label>
         <input type="text" class="form-control-sm" id="title" placeholder="Title" name="title" required>
         <button type="submit" class="btn btn-success">
             <i class="bi bi-file-earmark-plus"></i>Create
         </button>
     </form>
-
-    <table class="table table-light table-hover">
-        <thead class="table-secondary">
-        <tr>
-            <th>Name</th>
-            <th>Last updated</th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-        <% userFiles.forEach(userFile => { %>
-            <tr>
-                <td>
-                    <a href="/files/<%= userFile._id %>">
-                        <%= userFile.title %>
-                    </a>
-                </td>
-                <td>
-                    <%= formatLastUpdated(userFile.updatedAt) %>
-                </td>
-            </tr>
-        <% }) %>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-7">
+            <table class="table table-light table-hover">
+                <thead class="table-secondary">
+                <tr>
+                    <th class="col-3">Name:</th>
+                    <th class="col-2">Last updated:</th>
+                    <th class="col-2"></th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                <% markdownFiles.forEach(markdownFile => { %>
+                    <tr>
+                        <td class="">
+                            <a href="/files/<%= markdownFile._id %>" class="btn btn-outline-primary">
+                                <%= markdownFile.title %>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="btn"><%= formatLastUpdated(markdownFile.updatedAt) %> </span>
+                        </td>
+                        <td>
+                            <form action="/files/<%= markdownFile._id %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-file-earmark-excel-fill"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <%function formatLastUpdated(dateString) {

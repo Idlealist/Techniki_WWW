@@ -9,8 +9,8 @@ const writeFileAsync = promisify(fs.writeFile);
 const unlinkAsync = promisify(fs.unlink);
 
 router.get('/', isAuthenticated, async (req, res) => {
-    const userFiles = await MarkdownFile.find({owner: req.user._id}).sort({updatedAt: -1});
-    res.render('files/files', {username: req.user.username, userFiles: userFiles});
+    const markdownFiles = await MarkdownFile.find({owner: req.user._id}).sort({updatedAt: -1});
+    res.render('files/files', {username: req.user.username, markdownFiles: markdownFiles});
 });
 
 router.post('/', isAuthenticated, async (req, res) => {
