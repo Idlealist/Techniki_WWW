@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user')
 const filesRoutes = require('./routes/file')
 const settingsRoutes = require('./routes/settings')
+const setLocals = require('./Middlewares/setLocals')
 
 const favicon = require('serve-favicon');
 const express = require('express')
@@ -16,8 +17,8 @@ const flash = require('express-flash')
 const session = require('express-session')
 const passport = require('passport');
 const methodOverride = require('method-override');
-let app = express()
 
+let app = express()
 
 app.use(express.static( path.join(__dirname,'/public')));
 app.set('view engine', 'ejs')
@@ -35,12 +36,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.isAuthenticated();
-    res.locals.username = req.user ? req.user.username : null;
-    next();
-});
-
+app.use(setLocals);
+app.use(favicon('./public/images/favicon.ico'));
 mongoose.connect(process.env.DATABASE_URL)
     .then(() => {
         console.log("Connected to Mongo");

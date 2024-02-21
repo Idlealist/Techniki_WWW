@@ -80,7 +80,7 @@
         const markdownContent = simplemde.value();
 
         fetch(`/files/${markdownId}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -91,8 +91,8 @@
                 const htmlPreview = document.getElementById('htmlPreview');
                 htmlPreview.innerHTML = data.html;
             })
-            .catch(error => {
-                console.error(error);
+            .catch(err => {
+                console.error(err);
             });
     }
 </script>

@@ -4,9 +4,7 @@ const MarkdownFile = require('../models/MarkdownFile');
 const isAuthenticated = require('../Middlewares/authMiddleware');
 const {marked} = require('marked');
 const fs = require('fs');
-const {promisify} = require("util");
-const writeFileAsync = promisify(fs.writeFile);
-const unlinkAsync = promisify(fs.unlink);
+
 
 router.get('/', isAuthenticated, async (req, res) => {
     const markdownFiles = await MarkdownFile.find({owner: req.user._id}).sort({updatedAt: -1});
@@ -26,7 +24,7 @@ router.post('/', isAuthenticated, async (req, res) => {
 router.get('/:id', isAuthenticated, async (req, res) => {
     res.render('files/editor', {username: req.user.username, MarkdownFile: await MarkdownFile.findById(req.params.id)})
 });
-router.post('/:id', isAuthenticated, async (req, res) => {
+router.put('/:id', isAuthenticated, async (req, res) => {
     const {markdownContent} = req.body
     const html = marked(markdownContent);
     await MarkdownFile.findByIdAndUpdate(req.params.id, {content: markdownContent, html: html});
@@ -48,11 +46,11 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
 router.get('/:id/export', async (req, res) => {
     try {
         const markdownFile = await MarkdownFile.findById(req.params.id);
-        const tempPath = `temp_${markdownFile.title}.html`;
-        await writeFileAsync(tempPath, markdownFile.html);
+        const tempPath = `${markdownFile.title}.html`;
+        await fs.promises.writeFile(tempPath, markdownFile.html);
 
         res.download(tempPath, () => {
-            unlinkAsync(tempPath).catch(err => {
+            fs.promises.unlink(tempPath).catch(err => {
                 console.error(err);
             });
         });
