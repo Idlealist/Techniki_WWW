@@ -8,7 +8,6 @@ const filesRoutes = require('./routes/file')
 const settingsRoutes = require('./routes/settings')
 const setLocals = require('./Middlewares/setLocals')
 
-const favicon = require('serve-favicon');
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const mongoose = require("mongoose")
@@ -37,13 +36,12 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 app.use(setLocals);
-app.use(favicon('./public/images/favicon.ico'));
 mongoose.connect(process.env.DATABASE_URL)
     .then(() => {
         console.log("Connected to Mongo");
     })
-    .catch(error => {
-        console.error("Error connecting to Mongo:", error);
+    .catch(err => {
+        console.error("Error connecting to Mongo:", err);
     });
 
 
