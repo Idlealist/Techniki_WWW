@@ -3,13 +3,11 @@ const passport = require('passport');
 const User = require('../models/user');
 const LocalStrategy = require('passport-local');
 const bcrypt = require('bcryptjs')
-const {params, user} = require("express/lib/request");
-
 
 const router = express.Router();
 
 router.get('/login', (req, res) =>{
-    res.render('login',{user});
+    res.render('login');
 })
 
 router.get('/register', (req, res) =>{

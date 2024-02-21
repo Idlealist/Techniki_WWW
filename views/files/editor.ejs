@@ -61,14 +61,8 @@
     const markdownContent = document.getElementById('markdownContent');
     const simplemde = new SimpleMDE({ element: markdownContent, spellChecker: false, previewRender: false,
         placeholder: "Type here...", hideIcons: ["fullscreen", "preview", "side-by-side"],});
-    const titleInput = document.getElementById('titleInput');
     let timeoutId;
 
-
-    titleInput.addEventListener('input', function() {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(saveMarkdown, 100);
-    });
 
     simplemde.codemirror.on("change", function(){
         clearTimeout(timeoutId);
